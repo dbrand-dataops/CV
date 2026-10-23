@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>David Brand, Data Analyst and Analytics Engineer</title>
+<meta name="description" content="Interactive CV for David Brand: Power BI, Snowflake, dbt, SQL and Azure data engineering.">
+<style>
+:root{
+  --accent:#F26B0A; --accent-deep:#B84F00; --accent-soft:#FBD0A8;
+  --ink:#2B2F36; --muted:#5B6573; --line:#D9DDE3; --card:#FFFFFF; --bg:#F6F6F4;
+}
+@media (prefers-color-scheme: dark){
+  :root{ --ink:#ECEEF1; --muted:#A3ACB8; --line:#3A404A; --card:#22262D; --bg:#181B20; --accent-soft:#5A3410; }
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Segoe UI",system-ui,-apple-system,Arial,sans-serif;line-height:1.5}
+.wrap{max-width:1100px;margin:0 auto;padding:0 20px 60px}
+header{border-top:8px solid var(--accent);padding:36px 0 20px}
+h1{font-size:2.2rem;letter-spacing:.18em;margin:0;text-transform:uppercase;font-weight:600}
+.sub{color:var(--muted);font-size:1.1rem;margin:6px 0 14px;font-style:italic}
+.contact{display:flex;flex-wrap:wrap;gap:8px 22px;font-size:.95rem}
+.contact a{color:var(--accent-deep)}
+@media (prefers-color-scheme: dark){.contact a{color:var(--accent)}}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin:22px 0}
+.kpi{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px}
+.kpi b{display:block;font-size:2.4rem;color:var(--accent);line-height:1.1}
+.kpi span{color:var(--muted);font-size:.9rem}
+h2{font-size:.95rem;letter-spacing:.2em;text-transform:uppercase;margin:34px 0 12px;display:flex;align-items:center;gap:10px}
+h2::before{content:"";width:28px;height:4px;background:var(--accent);border-radius:2px}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px}
+.timeline{display:flex;flex-direction:column;gap:6px;margin-bottom:6px}
+.trow{display:grid;grid-template-columns:230px 1fr;gap:12px;align-items:center;cursor:pointer;padding:4px 6px;border-radius:6px;border:1px solid transparent;background:none;color:inherit;text-align:left;font:inherit;width:100%}
+.trow:hover{background:var(--bg)}
+.trow[aria-pressed=true]{border-color:var(--accent);background:var(--bg)}
+.tlabel{font-size:.9rem}
+.tlabel small{display:block;color:var(--muted)}
+.track{position:relative;height:16px;background:var(--bg);border-radius:8px;border:1px solid var(--line)}
+.bar{position:absolute;top:0;bottom:0;background:var(--accent);border-radius:8px;opacity:.55}
+.trow[aria-pressed=true] .bar{opacity:1}
+.axis{display:grid;grid-template-columns:230px 1fr;gap:12px;font-size:.75rem;color:var(--muted);padding:0 6px}
+.axis div:last-child{position:relative;height:1.2em}
+.axis span{position:absolute;transform:translateX(-50%)}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0}
+.chip{border:1px solid var(--line);background:var(--card);color:var(--ink);padding:5px 13px;border-radius:999px;cursor:pointer;font:inherit;font-size:.85rem}
+.chip[aria-pressed=true]{background:var(--accent);border-color:var(--accent);color:#fff}
+.rolehead h3{margin:0;font-size:1.25rem}
+.rolehead p{margin:4px 0 0;color:var(--muted)}
+.achs{list-style:none;padding:0;margin:14px 0 0;display:grid;gap:12px}
+.achs li{border-left:4px solid var(--accent);padding:2px 0 2px 14px}
+.achs strong{display:block}
+.achs em{font-style:normal;font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.skillcat{margin-bottom:16px}
+.skillcat h4{margin:0 0 8px;font-size:.85rem;color:var(--muted);font-weight:600}
+.skillgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:8px 22px}
+.skill{display:flex;justify-content:space-between;align-items:center;gap:10px;font-size:.92rem;padding:3px 0;border-bottom:1px dotted var(--line)}
+.skill.dim{opacity:.3}
+.dots{display:flex;gap:3px}
+.dots i{width:9px;height:9px;border-radius:50%;background:var(--line)}
+.dots i.on{background:var(--accent)}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+@media (max-width:760px){.two{grid-template-columns:1fr}.trow,.axis{grid-template-columns:1fr}.axis div:first-child{display:none}h1{font-size:1.6rem}}
+ul.plain{list-style:none;margin:0;padding:0}
+ul.plain li{padding:6px 0;border-bottom:1px dotted var(--line);font-size:.93rem}
+ul.plain small{color:var(--muted)}
+footer{color:var(--muted);font-size:.8rem;margin-top:30px}
+button:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+@media print{ body{background:#fff;color:#000} .chips,.timeline .trow{break-inside:avoid} .panel,.kpi{border-color:#bbb} }
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <h1 id="name"></h1>
+  <div class="sub" id="title"></div>
+  <div class="contact" id="contact"></div>
+</header>
+<div class="kpis" id="kpis"></div>
+
+<h2>Experience</h2>
+<div class="panel">
+  <div class="timeline" id="timeline"></div>
+  <div class="axis"><div></div><div id="axis"></div></div>
+  <div class="chips" id="themes" aria-label="Filter by theme"></div>
+  <div class="rolehead" id="rolehead"></div>
+  <ul class="achs" id="achs"></ul>
+</div>
+
+<h2>Skills</h2>
+<div class="panel">
+  <p id="skillnote" style="margin-top:0;color:var(--muted);font-size:.9rem"></p>
+  <div id="skills"></div>
+</div>
+
+<div class="two">
+  <div><h2>Certifications</h2><div class="panel"><ul class="plain" id="certs"></ul></div></div>
+  <div><h2>Education</h2><div class="panel"><ul class="plain" id="edu"></ul></div></div>
+</div>
+<footer>Select a role on the timeline to filter achievements and highlight the skills used in it.</footer>
+</div>
+<script>
+const D = {"roles": [{"RoleID": 1, "Employer": "University of Birmingham", "Title": "Data Analyst and Analytics Engineer", "StartYear": 2023, "EndYear": 2026, "EndLabel": "Present", "Sector": "Higher education", "Summary": "Power BI, Snowflake and dbt delivery on the StARS programme using Oracle/Banner student records."}, {"RoleID": 2, "Employer": "Insight", "Title": "Data Operations Specialist", "StartYear": 2019, "EndYear": 2023, "EndLabel": "2023", "Sector": "IT services", "Summary": "First person employed in a new end-to-end data analysis role; built ServiceNow to Databricks pipelines and Power BI reporting."}, {"RoleID": 3, "Employer": "Insight", "Title": "Transition and Change Manager", "StartYear": 2017, "EndYear": 2019, "EndLabel": "2019", "Sector": "IT services", "Summary": "Ran a service desk set-up outside the UK, was technical lead for the ServiceNow implementation and reporting analyst for managed services."}, {"RoleID": 4, "Employer": "NCR", "Title": "IT Service Desk and Service Transition Manager", "StartYear": 2010, "EndYear": 2017, "EndLabel": "2017", "Sector": "Retail IT services", "Summary": "Managed engineering teams and service transitions for major UK retail customers; built reporting and predictive analytics for incident management."}, {"RoleID": 5, "Employer": "BMI Healthcare", "Title": "Reporting Analyst", "StartYear": 2009, "EndYear": 2010, "EndLabel": "2010", "Sector": "Healthcare", "Summary": "Built SQL productivity tracking and Excel dashboards for directors."}, {"RoleID": 6, "Employer": "Capita", "Title": "Database Administrator", "StartYear": 2008, "EndYear": 2009, "EndLabel": "2009", "Sector": "Business services", "Summary": "Designed an MS Access database with forms, MI reports, access policies, backup and restore."}], "ach": [{"AchID": 1, "RoleID": 1, "Headline": "Power BI delivery on StARS", "Detail": "Develop Power BI semantic models, reports and dashboards across the StARS workstreams: RAPS, Progression, Graduation, SLC, Course and Module Catalogue and Engagement.", "Theme": "Reporting"}, {"AchID": 2, "RoleID": 1, "Headline": "BOXI to Power BI migration", "Detail": "Converted Business Objects (BOXI) reports to Power BI using DirectQuery over Oracle/Banner SQL for several Student Loans Company reporting projects.", "Theme": "Engineering"}, {"AchID": 3, "RoleID": 1, "Headline": "dbt models on Snowflake", "Detail": "Built dbt models over Banner data in Snowflake for Reasonable Adjustment Plan reporting, using dimension and fact tables and surrogate key patterns.", "Theme": "Engineering"}, {"AchID": 4, "RoleID": 1, "Headline": "Data security with RBAC", "Detail": "Designed role-based access control patterns for Snowflake data security.", "Theme": "Governance"}, {"AchID": 5, "RoleID": 1, "Headline": "Source control for Power BI", "Detail": "Introducing Git for semantic models and reports, with main, dev, test and prod branches and the test branch used for UAT.", "Theme": "Engineering"}, {"AchID": 6, "RoleID": 1, "Headline": "Modelling standards and Scrum", "Detail": "Apply the University's star schema standard for Power BI models; deliver in Scrum with JIRA boards and sprints.", "Theme": "Governance"}, {"AchID": 7, "RoleID": 2, "Headline": "ServiceNow data platform in Databricks", "Detail": "Built notebooks that extract, transform and load ServiceNow data daily through its API into Azure Databricks, managed through DEV, FQ and Main environments in GitHub.", "Theme": "Engineering"}, {"AchID": 8, "RoleID": 2, "Headline": "Reporting off the legacy pipeline", "Detail": "Migrated Power BI reporting away from an ODBC and gateway pipeline to the Databricks warehouse; added feedback and automation with Power Automate, Forms and Azure DevOps.", "Theme": "Reporting"}, {"AchID": 9, "RoleID": 2, "Headline": "Productivity and cost analytics", "Detail": "Delivered per-team productivity KPIs from SharePoint time data and a cost allocation model for finance that also exposed ITSM data quality gaps.", "Theme": "Reporting"}, {"AchID": 10, "RoleID": 2, "Headline": "Self-service data cube", "Detail": "Part of the team managing the services business data cube, interpreting business rules to enable self-service reporting.", "Theme": "Reporting"}, {"AchID": 11, "RoleID": 3, "Headline": "Service desk expansion in Europe", "Detail": "Project lead: headcount prediction, location and skills analysis, hiring, onboarding and training.", "Theme": "Leadership"}, {"AchID": 12, "RoleID": 3, "Headline": "ServiceNow migration", "Detail": "Designed and implemented migration of data and processes from legacy systems to ServiceNow; trained users to build their own reports and dashboards.", "Theme": "Leadership"}, {"AchID": 13, "RoleID": 3, "Headline": "Automated reporting", "Detail": "Used Azure Blob storage, SQL, PowerShell and Python to automate reporting and improve scalability.", "Theme": "Engineering"}, {"AchID": 14, "RoleID": 4, "Headline": "Retail service desk transitions", "Detail": "Transitioned and trained offshore service desks for Sainsbury's and Morrisons, including ITIL training for new team leads and managers.", "Theme": "Leadership"}, {"AchID": 15, "RoleID": 4, "Headline": "Predictive analytics for incidents", "Detail": "Designed productivity algorithms and predictive analytics for incident management; built databases mapping machine events to incidents.", "Theme": "Reporting"}, {"AchID": 16, "RoleID": 4, "Headline": "Problem management proof of concept", "Detail": "Proof of concept for Morrisons self-checkout support that produced immediate incident reduction and faster resolution.", "Theme": "Leadership"}, {"AchID": 17, "RoleID": 5, "Headline": "Agent productivity reporting", "Detail": "Built a mathematical process in SQL to track agent productivity, with daily dashboards used for business insight and lead generation.", "Theme": "Reporting"}, {"AchID": 18, "RoleID": 6, "Headline": "Access database delivery", "Detail": "Designed and delivered a database with forms and MI reports; managed UAT, training and implementation on time and in budget.", "Theme": "Engineering"}], "skills": [{"SkillID": 1, "Skill": "DAX", "Category": "Languages", "Level": 5}, {"SkillID": 2, "Skill": "SQL", "Category": "Languages", "Level": 4}, {"SkillID": 3, "Skill": "Python", "Category": "Languages", "Level": 4}, {"SkillID": 4, "Skill": "Power Query M", "Category": "Languages", "Level": 5}, {"SkillID": 5, "Skill": "VBA", "Category": "Languages", "Level": 4}, {"SkillID": 6, "Skill": "PowerShell", "Category": "Languages", "Level": 3}, {"SkillID": 7, "Skill": "Bash and batch", "Category": "Languages", "Level": 3}, {"SkillID": 8, "Skill": "Power BI", "Category": "BI and analytics", "Level": 5}, {"SkillID": 9, "Skill": "MS Excel", "Category": "BI and analytics", "Level": 5}, {"SkillID": 10, "Skill": "Business Objects (BOXI)", "Category": "BI and analytics", "Level": 4}, {"SkillID": 11, "Skill": "Snowflake", "Category": "Data engineering", "Level": 4}, {"SkillID": 12, "Skill": "dbt", "Category": "Data engineering", "Level": 4}, {"SkillID": 13, "Skill": "Azure Databricks", "Category": "Data engineering", "Level": 4}, {"SkillID": 14, "Skill": "Oracle and Banner ERP", "Category": "Data engineering", "Level": 4}, {"SkillID": 15, "Skill": "SQL Server and SSMS", "Category": "Data engineering", "Level": 4}, {"SkillID": 16, "Skill": "Azure Storage", "Category": "Cloud", "Level": 4}, {"SkillID": 17, "Skill": "Git and GitHub", "Category": "Engineering practice", "Level": 4}, {"SkillID": 18, "Skill": "Azure DevOps", "Category": "Engineering practice", "Level": 3}, {"SkillID": 19, "Skill": "JIRA and Scrum", "Category": "Engineering practice", "Level": 4}, {"SkillID": 20, "Skill": "RBAC design", "Category": "Data governance", "Level": 4}, {"SkillID": 21, "Skill": "Star schema modelling", "Category": "Data modelling", "Level": 5}, {"SkillID": 22, "Skill": "ServiceNow", "Category": "ITSM", "Level": 5}, {"SkillID": 23, "Skill": "Power Automate", "Category": "Automation", "Level": 4}, {"SkillID": 24, "Skill": "ITIL v4", "Category": "ITSM", "Level": 4}, {"SkillID": 25, "Skill": "Jupyter and R Studio", "Category": "Languages", "Level": 3}, {"SkillID": 26, "Skill": "MS Access", "Category": "Data engineering", "Level": 3}], "rs": [{"RoleID": 1, "SkillID": 1}, {"RoleID": 1, "SkillID": 2}, {"RoleID": 1, "SkillID": 4}, {"RoleID": 1, "SkillID": 8}, {"RoleID": 1, "SkillID": 10}, {"RoleID": 1, "SkillID": 11}, {"RoleID": 1, "SkillID": 12}, {"RoleID": 1, "SkillID": 14}, {"RoleID": 1, "SkillID": 17}, {"RoleID": 1, "SkillID": 19}, {"RoleID": 1, "SkillID": 20}, {"RoleID": 1, "SkillID": 21}, {"RoleID": 2, "SkillID": 1}, {"RoleID": 2, "SkillID": 2}, {"RoleID": 2, "SkillID": 3}, {"RoleID": 2, "SkillID": 4}, {"RoleID": 2, "SkillID": 6}, {"RoleID": 2, "SkillID": 8}, {"RoleID": 2, "SkillID": 9}, {"RoleID": 2, "SkillID": 13}, {"RoleID": 2, "SkillID": 16}, {"RoleID": 2, "SkillID": 17}, {"RoleID": 2, "SkillID": 18}, {"RoleID": 2, "SkillID": 22}, {"RoleID": 2, "SkillID": 23}, {"RoleID": 2, "SkillID": 25}, {"RoleID": 3, "SkillID": 2}, {"RoleID": 3, "SkillID": 3}, {"RoleID": 3, "SkillID": 6}, {"RoleID": 3, "SkillID": 8}, {"RoleID": 3, "SkillID": 9}, {"RoleID": 3, "SkillID": 16}, {"RoleID": 3, "SkillID": 22}, {"RoleID": 3, "SkillID": 24}, {"RoleID": 4, "SkillID": 2}, {"RoleID": 4, "SkillID": 9}, {"RoleID": 4, "SkillID": 15}, {"RoleID": 4, "SkillID": 24}, {"RoleID": 5, "SkillID": 2}, {"RoleID": 5, "SkillID": 5}, {"RoleID": 5, "SkillID": 9}, {"RoleID": 5, "SkillID": 10}, {"RoleID": 6, "SkillID": 2}, {"RoleID": 6, "SkillID": 26}], "certs": [{"CertID": 1, "Certification": "Power BI Data Analyst", "Issuer": "Microsoft", "Area": "Analytics"}, {"CertID": 2, "Certification": "Azure Data Scientist Associate", "Issuer": "Microsoft", "Area": "Data science"}, {"CertID": 3, "Certification": "Azure Data Engineer Associate", "Issuer": "Microsoft", "Area": "Data engineering"}, {"CertID": 4, "Certification": "Azure Data Analyst Associate", "Issuer": "Microsoft", "Area": "Analytics"}, {"CertID": 5, "Certification": "PL-900 Power Platform Fundamentals", "Issuer": "Microsoft", "Area": "Fundamentals"}, {"CertID": 6, "Certification": "DP-900 Azure Data Fundamentals", "Issuer": "Microsoft", "Area": "Fundamentals"}, {"CertID": 7, "Certification": "AI-900 Azure AI Fundamentals", "Issuer": "Microsoft", "Area": "Fundamentals"}, {"CertID": 8, "Certification": "AZ-900 Azure Fundamentals", "Issuer": "Microsoft", "Area": "Fundamentals"}, {"CertID": 9, "Certification": "ITIL v4", "Issuer": "Axelos", "Area": "Service management"}], "edu": [{"EduID": 1, "Institution": "Aberdeen University", "Programme": "Medicine (two years) and physiology (one year)", "StartYear": 1998, "EndYear": 2001}, {"EduID": 2, "Institution": "Open University", "Programme": "BSc studies in mathematics and computing; level 2 statistics and programming", "StartYear": 2004, "EndYear": 2008}], "kpi": [{"KpiID": 1, "Metric": "Years building Power BI models", "Value": 7}, {"KpiID": 2, "Metric": "Years at University of Birmingham", "Value": 3}, {"KpiID": 3, "Metric": "Years in data roles", "Value": 17}], "contact": {"Name": "David Brand", "Title": "Data Analyst and Analytics Engineer", "Email": "davidbrand@logicscience.co.uk", "Location": "Nottingham, UK"}};
+const $ = id => document.getElementById(id);
+const el = (tag, props={}, kids=[]) => { const e=document.createElement(tag); Object.assign(e,props); kids.forEach(k=>e.append(k)); return e; };
+let selRole = null, selTheme = null;
+
+$("name").textContent = D.contact.Name;
+$("title").textContent = D.contact.Title;
+const c = $("contact");
+c.append(el("a",{href:"mailto:"+D.contact.Email,textContent:D.contact.Email}), el("span",{textContent:D.contact.Location}));
+D.kpi.forEach(k => $("kpis").append(el("div",{className:"kpi"},[el("b",{textContent:k.Value}),el("span",{textContent:k.Metric})])));
+
+const minY = Math.min(...D.roles.map(r=>r.StartYear)), maxY = Math.max(...D.roles.map(r=>r.EndYear));
+const span = maxY - minY;
+const ax = $("axis");
+for (let y=Math.ceil(minY/5)*5; y<=maxY; y+=5){ const sp=el("span",{textContent:y}); sp.style.left=((y-minY)/span*100)+"%"; ax.append(sp); }
+D.roles.forEach(r => {
+  const b = el("button",{className:"trow",type:"button"});
+  b.setAttribute("aria-pressed","false");
+  b.dataset.id = r.RoleID;
+  b.append(el("div",{className:"tlabel"},[document.createTextNode(r.Title), el("small",{textContent:r.Employer+", "+r.StartYear+" to "+r.EndLabel})]));
+  const t = el("div",{className:"track"});
+  const bar = el("div",{className:"bar"});
+  bar.style.left = ((r.StartYear-minY)/span*100)+"%";
+  bar.style.width = Math.max(((r.EndYear-r.StartYear)/span*100),1.5)+"%";
+  t.append(bar); b.append(t);
+  b.onclick = () => { selRole = (selRole===r.RoleID)?null:r.RoleID; render(); };
+  $("timeline").append(b);
+});
+const themes = [...new Set(D.ach.map(a=>a.Theme))];
+themes.forEach(th => {
+  const b = el("button",{className:"chip",type:"button",textContent:th});
+  b.setAttribute("aria-pressed","false");
+  b.onclick = () => { selTheme = (selTheme===th)?null:th; render(); };
+  $("themes").append(b);
+});
+
+function render(){
+  document.querySelectorAll(".trow").forEach(b=>b.setAttribute("aria-pressed", String(+b.dataset.id===selRole)));
+  document.querySelectorAll(".chip").forEach(b=>b.setAttribute("aria-pressed", String(b.textContent===selTheme)));
+  const role = D.roles.find(r=>r.RoleID===selRole);
+  const rh = $("rolehead"); rh.replaceChildren();
+  if (role){
+    rh.append(el("h3",{textContent:role.Title+", "+role.Employer}), el("p",{textContent:role.Summary}));
+  } else {
+    rh.append(el("h3",{textContent:"All roles"}), el("p",{textContent:"Select a role above to focus on it."}));
+  }
+  const list = D.ach.filter(a => (!selRole||a.RoleID===selRole) && (!selTheme||a.Theme===selTheme));
+  const ul = $("achs"); ul.replaceChildren();
+  if (!list.length) ul.append(el("li",{textContent:"No achievements match this filter."}));
+  list.forEach(a => {
+    const emp = D.roles.find(r=>r.RoleID===a.RoleID).Employer;
+    ul.append(el("li",{},[el("em",{textContent:a.Theme+(selRole?"":" | "+emp)}), el("strong",{textContent:a.Headline}), document.createTextNode(a.Detail)]));
+  });
+  const used = new Set(D.rs.filter(x=>!selRole||x.RoleID===selRole).map(x=>x.SkillID));
+  $("skillnote").textContent = selRole ? "Skills used in this role are highlighted." : "Dots show self-assessed proficiency out of five.";
+  const sk = $("skills"); sk.replaceChildren();
+  const cats = [...new Set(D.skills.map(s=>s.Category))];
+  cats.forEach(cat => {
+    const g = el("div",{className:"skillcat"},[el("h4",{textContent:cat})]);
+    const grid = el("div",{className:"skillgrid"});
+    D.skills.filter(s=>s.Category===cat).forEach(s => {
+      const dots = el("span",{className:"dots"});
+      for(let i=1;i<=5;i++) dots.append(el("i",{className:i<=s.Level?"on":""}));
+      dots.setAttribute("role","img"); dots.setAttribute("aria-label",s.Level+" out of 5");
+      grid.append(el("div",{className:"skill"+(used.has(s.SkillID)?"":" dim")},[el("span",{textContent:s.Skill}),dots]));
+    });
+    g.append(grid); sk.append(g);
+  });
+}
+D.certs.forEach(c => $("certs").append(el("li",{},[document.createTextNode(c.Certification+" "),el("small",{textContent:c.Issuer})])));
+D.edu.forEach(e => $("edu").append(el("li",{},[document.createTextNode(e.Institution+": "+e.Programme+" "),el("small",{textContent:e.StartYear+" to "+e.EndYear})])));
+selRole = D.roles[0].RoleID;
+render();
+</script>
+</body>
+</html>
